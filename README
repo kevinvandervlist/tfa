@@ -1,3 +1,18 @@
 Analysis tool for images. 
 
 Requires human operation, and is used on intermediary images from a master's thesis of a friend.
+
+Dependencies: 
+Python, wxPython and PIL.
+
+Windows dependency download links:
+Python:
+http://www.python.org/download/releases/2.7.2/
+
+wxPython: grafische toolkit
+http://downloads.sourceforge.net/wxpython/wxPython2.8-win32-unicode-2.8.12.1-py27.exe
+http://downloads.sourceforge.net/wxpython/wxPython2.8-win64-unicode-2.8.12.1-py27.exe
+
+PIL: Python Imaging Library
+http://effbot.org/media/downloads/PIL-1.1.7.win32-py2.7.exe 
+
