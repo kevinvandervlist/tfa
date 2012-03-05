@@ -46,8 +46,10 @@ class Frame(AbstractFrame):
         nk = self.settings.GetNextKey()
         pk = self.settings.GetPreviousKey()
 
+        ekc = event.GetKeyCode()
+
         # zoom
-        if event.GetKeyCode() == zk:
+        if ekc == zk:
             # Toggle zoom
             if self.zoomed:
                 self.zoomed = False
@@ -55,9 +57,9 @@ class Frame(AbstractFrame):
             else:
                 self.zoomed = True
                 self.ZoomAtLocation(self.currentMouseLocation)
-        elif event.GetKeyCode() == nk:
+        elif ekc == nk:
             self.OpenNextImage()
-        elif event.GetKeyCode() == pk:
+        elif ekc == pk:
             self.OpenPrevImage()
         else:
             return

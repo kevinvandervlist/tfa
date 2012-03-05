@@ -47,8 +47,10 @@ class Frame(AbstractFrame):
         pk = self.settings.GetPreviousKey()
         sk = self.settings.GetSkipKey()
 
+        ekc = event.GetKeyCode()
+
         # zoom
-        if event.GetKeyCode() == zk:
+        if ekc == zk:
             # Toggle zoom
             if self.zoomed:
                 self.zoomed = False
@@ -56,15 +58,15 @@ class Frame(AbstractFrame):
             else:
                 self.zoomed = True
                 self.ZoomAtLocation(self.currentMouseLocation)
-        elif event.GetKeyCode() == nk:
+        elif ekc == nk:
             if len(self.locationList) > 1:
                 self.logger.LogVehicle(self.curFileName, self.locationList)
 
             self.OpenNextImage()
-        elif event.GetKeyCode() == pk:
+        elif ekc == pk:
             self.OpenPrevImage()
         # Skip marking, but indicate it with a different coloured box
-        elif event.GetKeyCode() == sk:
+        elif ekc == sk:
             self.skip = True
         else:
             return
