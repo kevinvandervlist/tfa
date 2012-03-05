@@ -49,7 +49,7 @@ class Frame(AbstractFrame):
         lk = self.settings.GetLaneSwitchKey()
 
         # zoom
-        if event.GetKeyCode() == ak:
+        if event.GetKeyCode() == zk:
             # Toggle zoom
             if self.zoomed:
                 self.zoomed = False
