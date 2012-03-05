@@ -60,13 +60,14 @@ class Settings():
         # l: Next lane switch. Only works in distances, and assumes 2 lanes
 
         # Windows provides keys with the value of the capital key,
-        # other systems correctly provid the actual ascii value...
+        # other systems correctly provide the actual ascii value...
+        # This code is horrible, and really needs some proper setup.
         if platform.system() == 'Windows':
-            self.zoomKey = 97 - 32
-            self.nextKey = 110 - 32
-            self.prevKey = 112 - 32
-            self.skipKey = 115 - 32
-            self.laneSwitchKey = 108 - 32
+            self.zoomKey = 65
+            self.nextKey = 78
+            self.prevKey = 80
+            self.skipKey = 83
+            self.laneSwitchKey = 76
         else:
             self.zoomKey = 97
             self.nextKey = 110
