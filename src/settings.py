@@ -23,6 +23,7 @@ These settings can all be retrieved via the corresponding settings.
 """
 
 import os
+import platform
 
 class Settings():
     """ Construct a settings object.
@@ -58,16 +59,20 @@ class Settings():
         # s: Skip a marking. Only works in distances.py
         # l: Next lane switch. Only works in distances, and assumes 2 lanes
 
-        # Zoom in
-        self.zoomKey = 97
-        # Next picture
-        self.nextKey = 110
-        # Previous picture
-        self.prevKey = 112
-        # A lane marker can't be seen.
-        self.skipKey = 115
-        # Switch lanes
-        self.laneSwitchKey = 108
+        # Windows provides keys with the value of the capital key,
+        # other systems correctly provid the actual ascii value...
+        if platform.system() == 'Windows':
+            self.zoomKey = 97 - 32
+            self.nextKey = 110 - 32
+            self.prevKey = 112 - 32
+            self.skipKey = 115 - 32
+            self.laneSwitchKey = 108 - 32
+        else:
+            self.zoomKey = 97
+            self.nextKey = 110
+            self.prevKey = 112
+            self.skipKey = 115
+            self.laneSwitchKey = 108
 
     """ Valid image extensions
 
