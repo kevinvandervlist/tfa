@@ -31,9 +31,10 @@ The following eventlisteners are available:
 In this base class, they just return.
 """
 
-import os
-import wx
 import inspect
+import os
+import platform
+import wx
 
 from PIL import Image
 from collections import deque
@@ -81,7 +82,10 @@ class AbstractFrame(wx.Frame):
         # And explicitly request focus for the same reason
         self.panel.SetFocus()
 
-        self.Bind(wx.EVT_CHAR_HOOK, self.KeyboardEvent)
+        if platform.system() == 'Windows':
+            self.panel.Bind(wx.EVT_KEY_DOWN, self.KeyboardEvent)
+        else:
+            self.Bind(wx.EVT_CHAR_HOOK, self.KeyboardEvent)
 
         # Finally, start the image loop
         self.OpenNextImage()
