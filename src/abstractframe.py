@@ -106,16 +106,25 @@ class AbstractFrame(wx.Frame):
         self.bitmap.Bind(wx.EVT_LEFT_DOWN, self.MouseEventLeft)
         self.bitmap.Bind(wx.EVT_RIGHT_DOWN, self.MouseEventRight)
         self.bitmap.Bind(wx.EVT_MOTION, self.SetMouseLocation)
+        # Redraw stuff
+        self.panel.Layout()
+        self.panel.Refresh()
+        self.Layout()
+        self.Refresh()
 
     """ Set the current PIL image as bitmap image.
 
     In other words, display the current PIL image on the gui.
+    If there exists a bitmap, destroy it first.
     """
     def SetPilImage(self):
         self.curWxImage = self.convert.PilToImage(self.curPilImage)
         self.curScaledImage = self.imops.ScaleWxImage(self.curWxImage, self.size)
         self.curScaledImageSize = (self.curScaledImage.GetWidth(), self.curScaledImage.GetHeight())
         self.curViewPort = (0, 0, self.curScaledImageSize[0], self.curScaledImageSize[1])
+
+        if self.bitmap:
+            self.bitmap.Destroy()
 
         self.bitmap = wx.StaticBitmap(parent=self, bitmap=self.curScaledImage.ConvertToBitmap(), size=self.size)
 
