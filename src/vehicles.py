@@ -45,6 +45,7 @@ class Frame(AbstractFrame):
         zk = self.settings.GetZoomKey()
         nk = self.settings.GetNextKey()
         pk = self.settings.GetPreviousKey()
+        sk = self.settings.GetSkipKey()
 
         # zoom
         if event.GetKeyCode() == zk:
@@ -62,18 +63,29 @@ class Frame(AbstractFrame):
             self.OpenNextImage()
         elif event.GetKeyCode() == pk:
             self.OpenPrevImage()
+        # Skip marking, but indicate it with a different coloured box
+        elif event.GetKeyCode() == sk:
+            self.skip = True
         else:
             return
 
     def MouseEventLeft(self, event):
+        # Only process when zoomed in
         if self.zoomed:
             self.zoomed = False
             x = event.GetX()
             y = event.GetY()
             point = self.imops.GetOriginalCoords(self.curZoomLevel, (x,y), self.curViewPort)
-            self.imops.SetMarking(self.curPilImage, point, self.settings.GetPrimaryColour())
+            if self.skip:
+                # skip modus
+                self.skip = False
+                self.locationList.append(0)
+                self.imops.SetMarking(self.curPilImage, point, self.settings.GetSkipColour())
+            else:
+                self.locationList.append(point)
+                self.imops.SetMarking(self.curPilImage, point, self.colour)
+
             self.SetPilImage()
-            self.locationList.append(point)
 
 class App(wx.App):
     """ Wx constructor """
