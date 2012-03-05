@@ -62,7 +62,7 @@ class Settings():
         # Windows provides keys with the value of the capital key,
         # other systems correctly provide the actual ascii value...
         # This code is horrible, and really needs some proper setup.
-        if platform.system() == 'Windows':
+        if platform.system() == "Windows":
             self.zoomKey = 65
             self.nextKey = 78
             self.prevKey = 80
