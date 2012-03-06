@@ -1,0 +1,48 @@
+On 16/02/12 18:16, Robin Dunn wrote:
+> On 2/15/12 11:57 PM, Kevin van der Vlist wrote:
+>> Hello guys,
+>>
+>> Today I'm busy writing a simple wxPython application, but I have some
+>> problems with it. As soon as I want to attach a Keyboard listener,
+>> wx.Bind() returns as expected, but events won't be registered.
+>
+> On some platforms the frames can not deal with key events, try putting a
+> panel or some other window type in the frame and bind the event handler
+> there.
+>
+Yes, this is the problem. Adding a panel with a size of (0,0) allows me 
+to receive the keyboard events. Thanks for the tip. Perhaps it would be 
+nice to place a note about this on 
+http://www.wxpython.org/docs/api/wx.KeyEvent-class.html or similar? 
+Something like the current win32 notice.
+
+For future reference: this is on Linux, using KDE4.
+>>
+>> Below is a minimal test case of the situation I expect to work. Do you
+>> know why the KeyBoardEvent() function isn't triggered? The frame even
+>> explicitly asks for focus, but the function is never called.
+>> self.AcceptsFocusFromKeyboard() also returns false.
+>
+> Checking HasFocus would be a better test there.
+HasFocus() was false as well, I tested it before I sent the mail.
+>
+> import wx
+> print wx.version()
+>
+> class Frame(wx.Frame):
+> def __init__(self, title):
+> wx.Frame.__init__(self, None, title=title, size=(350,200))
+> pnl = wx.Panel(self)
+> pnl.SetFocus()
+> pnl.Bind(wx.EVT_KEY_DOWN, self.KeyBoardEvent)
+> print "Focus?: " + str(pnl.HasFocus())
+>
+> def KeyBoardEvent(self, event):
+> print event
+>
+> if __name__ == '__main__':
+> app = wx.App()
+> fr = Frame("wx.EVT_KEY_DOWN")
+> fr.Show()
+> app.MainLoop()
+>

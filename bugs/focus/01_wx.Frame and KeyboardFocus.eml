@@ -1,0 +1,29 @@
+Hello guys,
+
+Today I'm busy writing a simple wxPython application, but I have some
+problems with it. As soon as I want to attach a Keyboard listener,
+wx.Bind() returns as expected, but events won't be registered.
+
+Below is a minimal test case of the situation I expect to work. Do you
+know why the KeyBoardEvent() function isn't triggered? The frame even
+explicitly asks for focus, but the function is never called.
+self.AcceptsFocusFromKeyboard() also returns false.
+
+#!/usr/bin/python
+import wx
+
+class Frame(wx.Frame):
+    def __init__(self, title):
+        wx.Frame.__init__(self, None, title=title, size=(350,200))
+        self.SetFocus()
+        self.Bind(wx.EVT_KEY_DOWN, self.KeyBoardEvent)
+        print "Focus?: " + str(self.AcceptsFocusFromKeyboard())
+
+    def KeyBoardEvent(self, event):
+        print event
+
+if __name__ == '__main__':
+    app = wx.App()
+    fr = Frame("wx.EVT_KEY_DOWN")
+    fr.Show()
+    app.MainLoop()
