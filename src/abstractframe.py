@@ -133,7 +133,7 @@ class AbstractFrame(wx.Frame):
         if self.bitmap:
             self.bitmap.Destroy()
 
-        self.bitmap = wx.StaticBitmap(parent=self, bitmap=self.curScaledImage.ConvertToBitmap(), size=self.size)
+        self.bitmap = wx.StaticBitmap(parent=self, pos=(0,0), bitmap=self.curScaledImage.ConvertToBitmap(), size=self.size)
 
         self.AttachListenersToBitmap()
 
@@ -151,7 +151,7 @@ class AbstractFrame(wx.Frame):
         if self.bitmap:
             self.bitmap.Destroy()
 
-        self.bitmap = wx.StaticBitmap(parent=self, bitmap=crop_sc.ConvertToBitmap(), size=self.size)
+        self.bitmap = wx.StaticBitmap(parent=self, pos=(0,0), bitmap=crop_sc.ConvertToBitmap(), size=self.size)
 
         self.AttachListenersToBitmap()
 
