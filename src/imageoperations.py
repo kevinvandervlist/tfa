@@ -101,7 +101,7 @@ class ImageOperations():
         H = wximage.GetHeight()
 
         # If the size > image, don't scale.
-        if size[0] > W or size[1] > H:
+        if size[0] > W and size[1] > H:
             return wximage
         else:
             return self.ScaleWxImageForced(wximage, size)
