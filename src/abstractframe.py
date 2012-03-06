@@ -78,7 +78,7 @@ class AbstractFrame(wx.Frame):
 
         wx.Frame.__init__(self, parent, id, title, pos, size, style=style)
         # Panel to allow Linux to have keypress events as well.
-        self.panel = wx.Panel(self, wx.ID_ANY, size=(0, 0))
+        self.panel = wx.Panel(self, wx.ID_ANY)
         # And explicitly request focus for the same reason
         self.panel.SetFocus()
 
@@ -133,7 +133,8 @@ class AbstractFrame(wx.Frame):
         if self.bitmap:
             self.bitmap.Destroy()
 
-        self.bitmap = wx.StaticBitmap(parent=self, pos=(0,0), bitmap=self.curScaledImage.ConvertToBitmap(), size=self.size)
+        bm = self.curScaledImage.ConvertToBitmap()
+        self.bitmap = wx.StaticBitmap(parent=self.panel, pos=(0,0), bitmap=bm, size=bm.Size)
 
         self.AttachListenersToBitmap()
 
@@ -151,7 +152,8 @@ class AbstractFrame(wx.Frame):
         if self.bitmap:
             self.bitmap.Destroy()
 
-        self.bitmap = wx.StaticBitmap(parent=self, pos=(0,0), bitmap=crop_sc.ConvertToBitmap(), size=self.size)
+        bm = crop_sc.ConvertToBitmap()
+        self.bitmap = wx.StaticBitmap(parent=self.panel, pos=(0,0), bitmap=bm, size=bm.Size)
 
         self.AttachListenersToBitmap()
 
