@@ -102,15 +102,22 @@ class AbstractFrame(wx.Frame):
         self.curZoomLevel = 1
         self.curPilImage = Image.open(imageFile)
         self.SetPilImage()
-        # Mouse events have to be attached to the bitmap
-        self.bitmap.Bind(wx.EVT_LEFT_DOWN, self.MouseEventLeft)
-        self.bitmap.Bind(wx.EVT_RIGHT_DOWN, self.MouseEventRight)
-        self.bitmap.Bind(wx.EVT_MOTION, self.SetMouseLocation)
         # Redraw stuff
         self.panel.Layout()
         self.panel.Refresh()
         self.Layout()
         self.Refresh()
+
+
+    """ Attach the correct mouselisteners to the current bitmap
+
+    Use whon a bitmap is destroyed, and a new one is attached to the frame.
+    """
+    def AttachListenersToBitmap(self):
+        # Mouse events have to be attached to the bitmap
+        self.bitmap.Bind(wx.EVT_LEFT_DOWN, self.MouseEventLeft)
+        self.bitmap.Bind(wx.EVT_RIGHT_DOWN, self.MouseEventRight)
+        self.bitmap.Bind(wx.EVT_MOTION, self.SetMouseLocation)
 
     """ Set the current PIL image as bitmap image.
 
@@ -128,6 +135,8 @@ class AbstractFrame(wx.Frame):
 
         self.bitmap = wx.StaticBitmap(parent=self, bitmap=self.curScaledImage.ConvertToBitmap(), size=self.size)
 
+        self.AttachListenersToBitmap()
+
     """ Zoom in at the given location
 
     Zoom in an given location (x, y), and redraw the screen.
@@ -135,9 +144,16 @@ class AbstractFrame(wx.Frame):
     def ZoomAtLocation(self, location):
         self.curZoomLevel = self.settings.GetZoomFactor()
         self.curViewPort = self.imops.CalculateViewPort(self.curZoomLevel, location, self.curPilImage.size, self.curScaledImageSize)
+
         crop = self.convert.PilToImage(self.curPilImage.crop(self.curViewPort))
         crop_sc = self.imops.ScaleWxImageForced(crop, self.size)
+
+        if self.bitmap:
+            self.bitmap.Destroy()
+
         self.bitmap = wx.StaticBitmap(parent=self, bitmap=crop_sc.ConvertToBitmap(), size=self.size)
+
+        self.AttachListenersToBitmap()
 
     """ Iterate to the next image (if any).
     
