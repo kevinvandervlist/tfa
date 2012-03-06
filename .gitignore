@@ -2,3 +2,5 @@
 *.pyc
 # Ignore image directory
 images/*
+# Ignore output dir as well
+output/*

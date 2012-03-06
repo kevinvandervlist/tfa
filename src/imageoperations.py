@@ -78,17 +78,22 @@ class ImageOperations():
     Always return a scaled image, even if it means upscaling.
     """
     def ScaleWxImageForced(self, wximage, size):
-        W = wximage.GetWidth()
-        H = wximage.GetHeight()
+        x = wximage.GetWidth()
+        y = wximage.GetHeight()
 
-        ms = max(size)
-        if W > H:
-            NewW = ms
-            NewH = ms * H / W
+        xfac = float(x) / float(size[0])
+        yfac = float(y) / float(size[1])
+        xn = 0
+        yn = 0
+
+        if xfac >= yfac:
+            xn = x / xfac
+            yn = y / xfac
         else:
-            NewH = ms
-            NewW = ms * W / H
-        return wximage.Scale(NewW, NewH)
+            xn = x / yfac
+            yn = y / yfac
+
+        return wximage.Scale(xn, yn)
 
 
     """ Scale an image
