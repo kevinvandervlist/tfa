@@ -70,7 +70,7 @@ class Frame(AbstractFrame):
             x = event.GetX()
             y = event.GetY()
             point = self.imops.GetOriginalCoords(self.curZoomLevel, (x,y), self.curViewPort)
-            self.imops.SetMarking(self.curPilImage, point, self.settings.GetPrimaryColour())
+            self.imops.SetMarking(self.curPilImage, point, self.settings.GetPrimaryColour(), self.settings.GetMarkingOffset(), self.settings.GetMarkingWidth())
             self.SetPilImage()
             self.locationList.append(point)
             if len(self.locationList) == 2:

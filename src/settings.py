@@ -36,7 +36,12 @@ class Settings():
         self.primaryColour = "#0000FF"
         self.secondaryColour = "#00FF00"
         self.skipColour = "#FF0000"
+        # Zoomfactor
         self.zoom = 4
+        # Marking offset
+        self.offset = 10
+        # Marking width
+        self.width = 5
 
         if prg == "viaduct.py":
             self.indir = "../images"
@@ -166,3 +171,17 @@ class Settings():
     """
     def GetLaneSwitchKey(self): 
         return self.laneSwitchKey
+
+    """ Get the offset of a marking
+
+    Return the marking offset.
+    """
+    def GetMarkingOffset(self):
+        return self.offset
+
+    """ Get the width of a marking
+
+    Return the marking width.
+    """
+    def GetMarkingWidth(self):
+        return self.width

@@ -116,12 +116,8 @@ class ImageOperations():
     The marking is a little box around a given point (x, y) 
     that will be painted on the PIL image pilimg.
     """
-    def SetMarking(self, pilimg, point, colour):
+    def SetMarking(self, pilimg, point, colour, offset, width):
         draw = ImageDraw.Draw(pilimg)
-
-        # The offset to use for the squaring
-        offset = 10
-        width = 5
 
         top = (point[0] - offset, point[1] - offset, point[0] + offset, point[1] - offset)
         left = (point[0] - offset, point[1] - offset, point[0] - offset, point[1] + offset)
