@@ -1,0 +1,46 @@
+On 3/6/12 2:19 AM, Kevin van der Vlist wrote:
+> Hello,
+>
+> Because I'm currently building a simple cross platform Python GUI
+> application, I decided to use wxPython. All went fine until I ran in
+> the following issue.
+>
+> I have a wx.Frame, with a certain image on it (wx.StaticBitmap). This
+> image needs to 'start' on (0,0), the left upper corner of the
+> wx.Frame. In short, this became the code below [2], using the image
+> [3]. Strangely this code is behaving differently on Windows and
+> Linux.
+>
+> On Linux, this code behaves as expected. The (small) image is placed
+> on the left upper corner. It looks like this:
+> http://med.hro.nl/vlikb/wxpython/bitmap_placement_linux.png
+>
+> On Windows, however, the resulting frame is different. The image is
+> placed in the center of the frame, as can be seen here:
+> http://med.hro.nl/vlikb/wxpython/bitmap_placement_windows.png
+>
+> In my understanding, the image should be in the upper left corner as
+> well. Does anyone know how this can happen?
+
+Actually the static bitmap widget is being resized to fill the whole 
+frame on both platforms, (this is a feature of wxFrame, that if it has 
+only one child then that child is moved/sized such that it fills the 
+frame's client area.)  The widgets just have different behaviors when 
+the widget is larger than the image.
+
+
+> And how this can be fixed?
+> The images need to 'start' at (0,0), even on Windows.
+>
+
+You can override the frame's default one child behavior by using a sizer 
+instead of absolute positioning and sizing.  Or you can use a panel as 
+the only child of the frame and then make that panel be the parent of 
+the static bitmap widget.  It would still be a good idea to use a sizer 
+on the panel, but absolute positioning/sizing would work too.
+
+
+-- 
+Robin Dunn
+Software Craftsman
+http://wxPython.org

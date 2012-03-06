@@ -1,0 +1,61 @@
+Kevin van der Vlist wrote:
+> I have a wx.Frame, with a certain image on it (wx.StaticBitmap). This
+> image needs to 'start' on (0,0), the left upper corner of the
+> wx.Frame. In short, this became the code below [2], using the image
+> [3]. Strangely this code is behaving differently on Windows and
+> Linux.
+> ...
+> On Windows, however, the resulting frame is different. The image is
+> placed in the center of the frame, as can be seen here:
+> http://med.hro.nl/vlikb/wxpython/bitmap_placement_windows.png
+>
+> In my understanding, the image should be in the upper left corner as
+> well. Does anyone know how this can happen? And how this can be fixed?
+> The images need to 'start' at (0,0), even on Windows.
+
+It's complicated.  Isn't it always?
+
+When a frame contains a single child, wx by default expands that child
+to fill the frame.  In your case, the static bitmap code is expanded to
+fill the wx.Frame, despite your "size" specification, and despite the
+size of the incoming image.  The static bitmap is one of those rather
+primitive wrappers around native controls.  In Windows, the native
+static bitmap control centers its bitmap within its container.  Hence,
+the behavior you see.  The Linux native static bitmap control must have
+different rules.
+
+In general, it's not a good idea to add controls directly to a frame, in
+part because of side effects like this.  The solution is to add a panel
+to your frame, and add the StaticBitmap to the panel, and set the size
+of the StaticBitmap to the actual size of the bitmap.
+
+import wx
+
+class Frame(wx.Frame):
+    def __init__(self):
+        title="bitmap placement issue"
+        pos=(0, 0)
+        size=(800, 600)
+        wx.Frame.__init__(self, parent=None, title=title, pos=pos,
+size=size)
+        p = wx.Panel(self)
+        bm = wx.BitmapFromImage(wx.Image("bitmap_placement.png",
+wx.BITMAP_TYPE_PNG))
+        self.bitmap = wx.StaticBitmap(parent=p, pos=pos, bitmap=bm,
+size=bm.Size)
+
+class App(wx.App):
+    def OnInit(self):
+        self.frame = Frame()
+        self.frame.Show()
+        return True
+
+if __name__ == '__main__':
+    app = App(0)
+    app.MainLoop()
+
+
+
+-- 
+Tim Roberts, t...@probo.com
+Providenza & Boekelheide, Inc.

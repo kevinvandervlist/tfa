@@ -1,0 +1,59 @@
+Hello,
+
+Because I'm currently building a simple cross platform Python GUI
+application, I decided to use wxPython. All went fine until I ran in
+the following issue.
+
+I have a wx.Frame, with a certain image on it (wx.StaticBitmap). This
+image needs to 'start' on (0,0), the left upper corner of the
+wx.Frame. In short, this became the code below [2], using the image
+[3]. Strangely this code is behaving differently on Windows and
+Linux.
+
+On Linux, this code behaves as expected. The (small) image is placed
+on the left upper corner. It looks like this:
+http://med.hro.nl/vlikb/wxpython/bitmap_placement_linux.png
+
+On Windows, however, the resulting frame is different. The image is
+placed in the center of the frame, as can be seen here:
+http://med.hro.nl/vlikb/wxpython/bitmap_placement_windows.png
+
+In my understanding, the image should be in the upper left corner as
+well. Does anyone know how this can happen? And how this can be fixed?
+The images need to 'start' at (0,0), even on Windows.
+
+A minimal testcase can be found at [1].
+
+Regards,
+
+Kevin van der Vlist
+
+[1]: http://med.hro.nl/vlikb/wxpython/
+[2]: http://med.hro.nl/vlikb/wxpython/bitmap_placement.png
+[3]: Proof of concept
+import wx
+
+class Frame(wx.Frame):
+    def __init__(self):
+
+        title="bitmap placement issue"
+        pos=(0, 0)
+        size=(320, 240)
+
+        wx.Frame.__init__(self, parent=None, title=title, pos=pos,
+size=size)
+
+        bm = wx.BitmapFromImage(wx.Image("bitmap_placement.png",
+wx.BITMAP_TYPE_PNG))
+
+        self.bitmap = wx.StaticBitmap(parent=self, pos=pos, bitmap=bm,
+size=size)
+
+class App(wx.App):
+    def OnInit(self):
+        self.frame = Frame()
+        self.frame.Show()
+        return True
+
+if __name__ == '__main__':
+    app = App()
