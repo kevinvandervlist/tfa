@@ -96,18 +96,29 @@ class AbstractFrame(wx.Frame):
     Eventlisteners are (re)binded as well.
     """
     def LoadImageFile(self, imageFile):
-        # Update titlebar with current filename and a position counter.
-        self.SetTitle("File: " + imageFile + ": " + str(len(self.doneFileList)) + "/" + str(len(self.todoFileList) + len(self.doneFileList)))
         # Reset internal data
         self.curZoomLevel = 1
         self.curPilImage = Image.open(imageFile)
         self.SetPilImage()
+
+        self.UpdateTitleBar(imageFile)
+
         # Redraw stuff
         self.panel.Layout()
         self.panel.Refresh()
         self.Layout()
         self.Refresh()
 
+    """ Update the titlebar with a given filename
+    
+    Update the titlebar with some useful information
+    """
+
+    def UpdateTitleBar(self, imageFile):
+        filestr = "File: " + imageFile
+        cntstr = str(len(self.doneFileList) + 1) + "/" + str(len(self.todoFileList) + len(self.doneFileList) + 1)
+        resostr = str(self.curPilImage.size)
+        self.SetTitle(filestr + " | " + resostr + " | " + cntstr)
 
     """ Attach the correct mouselisteners to the current bitmap
 
