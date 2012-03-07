@@ -91,6 +91,8 @@ class ImageOperations():
     """ Forcibly scale an image
 
     Always return a scaled image, even if it means upscaling.
+
+    When the resulting scaling < 1, make sure it is still at least a pixel high.
     """
     def ScaleWxImageForced(self, wximage, size):
         x = wximage.GetWidth()
@@ -107,6 +109,12 @@ class ImageOperations():
         else:
             xn = x / yfac
             yn = y / yfac
+
+        if xn < 1:
+            xn += 1
+
+        if yn < 1:
+            yn += 1
 
         return wximage.Scale(xn, yn)
 
