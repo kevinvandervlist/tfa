@@ -50,6 +50,21 @@ class ImageOperations():
         up = y - view_height / 2
         bottom = y + view_height / 2
 
+        return self.ValidateViewport(left, up, right, bottom)
+
+    """ Validate a given viewport.
+
+    A viewport can be invalid for a number of reasons. 
+    Validate it inside this function, for example because 
+    the upper and bottom region are the same digit.
+    """
+    def ValidateViewport(self, left, up, right, bottom):
+        if left == right:
+            left -= 100
+            right += 100
+        if up == bottom:
+            up -= 100
+            bottom += 100
         return (left, up, right, bottom)
 
     """ Return the (x, y) location of a mousclick in a viewport.
