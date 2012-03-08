@@ -65,7 +65,11 @@ class Logger():
         
         buf = ""
         for x in loclist:
-            buf += str(x[0]) + " " + str(x[1]) + " "
+            if x == 0:
+                # Invalid marking
+                buf += str(x) + " " + str(x) + " "
+            else:
+                buf += str(x[0]) + " " + str(x[1]) + " "
 
         self.WriteLog(fhs, buf + "\n")
 
