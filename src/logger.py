@@ -65,11 +65,7 @@ class Logger():
         
         buf = ""
         for x in loclist:
-            if x == 0:
-                # Invalid marking
-                buf += str(x) + " " + str(x) + " "
-            else:
-                buf += str(x[0]) + " " + str(x[1]) + " "
+            buf += str(x[0]) + " " + str(x[1]) + " "
 
         self.WriteLog(fhs, buf + "\n")
 
@@ -101,10 +97,7 @@ class Logger():
         cur_lane = lane_a
         # This for-loop Leaves a trailing space.
         for x in loclist:
-            if x == 0:
-                # Invalid marking
-                cur_lane.append((0, 0))
-            elif x == -1:
+            if x == -1:
                 # New lane
                 cur_lane = lane_b
             else:

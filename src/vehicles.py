@@ -81,7 +81,7 @@ class Frame(AbstractFrame):
             if self.skip:
                 # skip modus
                 self.skip = False
-                self.locationList.append(0)
+                self.locationList.append((0, 0))
                 self.imops.SetMarking(self.curPilImage, point, self.settings.GetSkipColour(), self.settings.GetMarkingOffset(), self.settings.GetMarkingWidth())
             else:
                 self.locationList.append(point)
