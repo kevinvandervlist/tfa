@@ -46,15 +46,19 @@ class Settings():
         if prg == "viaduct.py":
             self.indir = "../images"
             self.outdir = "../output"
+            self.startat = 1
         elif prg == "distances.py":
             self.indir = "../images"
             self.outdir = "../output"
+            self.startat = 1
         elif prg == "vehicles.py":
             self.indir = "../images"
             self.outdir = "../output"
+            self.startat = 1
         else:
             self.indir = "../images"
             self.outdir = "../output"
+            self.startat = 1
 
         # Value of the control keys: http://www.asciitable.com/
         # Standard controls are:
@@ -185,3 +189,10 @@ class Settings():
     """
     def GetMarkingWidth(self):
         return self.width
+
+    """ Start at the given file
+
+    Return at which file to start to count.
+    """
+    def StartAt(self):
+        return self.startat

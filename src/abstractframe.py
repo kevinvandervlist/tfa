@@ -76,6 +76,13 @@ class AbstractFrame(wx.Frame):
         # Init frame
         style=wx.DEFAULT_FRAME_STYLE ^ (wx.RESIZE_BORDER)
 
+        # Do some frames need to be skipped?
+        skip = self.settings.StartAt()
+        while skip > 1:
+            skip -= 1
+            if len(self.todoFileList) > 0:
+                self.doneFileList.append(self.todoFileList.popleft())
+
         wx.Frame.__init__(self, parent, id, title, pos, size, style=style)
         # Panel to allow Linux to have keypress events as well.
         self.panel = wx.Panel(self, wx.ID_ANY)
